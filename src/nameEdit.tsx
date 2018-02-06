@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Fragment } from "react";
+import { OnChangeTextType, onChangeText } from './nameEdit.business';
 
 interface Props {
     userName: string;
-    onChange: (event : React.ChangeEvent<HTMLInputElement>) => void;
+    onNameUpdated : OnChangeTextType;
 }
 
-export const NameEditComponent = (props: Props) =>
-    <Fragment>
+export const NameEditComponent = (props: Props) => 
+    <div>
         <label>Update name: </label>
         <input
             value={props.userName}
-            onChange={props.onChange}
+            onChange={onChangeText(props.onNameUpdated)}
         />
-    </Fragment>
+    </div>

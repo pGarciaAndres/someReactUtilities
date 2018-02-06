@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { HelloComponent } from "./hello";
+import { NameEditComponent } from "./nameEdit";
 
 interface Props{
 
@@ -15,13 +16,19 @@ export class App extends React.Component<Props, State> {
         this.state = {userName : 'defaultUserName'}
     }
 
-    setUsernameState = (event : React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({userName: event.target.value})
+    setUsernameState = (newName : string) => {
+        this.setState({userName: newName});
     }
 
     public render() {
         return (
-            <HelloComponent userName={this.state.userName} />
+            <div>
+                <NameEditComponent
+                    userName={this.state.userName}
+                    onNameUpdated={this.setUsernameState}
+                />
+                <HelloComponent userName={this.state.userName} />
+            </div>
         );
     }
 }
