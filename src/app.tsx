@@ -36,6 +36,7 @@ export class App extends React.Component<Props, State> {
 
     disableSubmitButton() {
         return (this.state.editingName === '' || this.state.editingName === this.state.userName);
+        
     }
 
     public render() {
