@@ -42,7 +42,7 @@ export class App extends React.Component<Props, State> {
         return (
             <div>
                 <NameEditComponent
-                    disableSubmitButton={this.state.editingName === '' || this.state.editingName === this.state.userName}
+                    disableSubmitButton={this.disableSubmitButton()}
                     editingUserName={this.state.editingName}
                     onNameUpdated={this.setEditingUsernameState}
                     onNameSubmit={this.setUsernameFinal}
