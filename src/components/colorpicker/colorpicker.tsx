@@ -6,15 +6,16 @@ interface Props {
     onColorUpdated: (color: Color) => void;
 }
 
+const onUpdateColorComponent = (props: Props, colorId : keyof Color) => (e) => {
+    props.onColorUpdated(
+        {
+            ...props.color,
+            [colorId]: e.target.valueAsNumber,
+        }
+    )
+}
+
 export const ColorPicker = (props: Props) => {
-    const onUpdateRed = (e) => {
-        props.onColorUpdated(
-            {
-                red: e.target.valueAsNumber,
-                green: props.color.green,
-                blue: props.color.blue
-            });
-    }
 
     return (
         <div>
@@ -24,8 +25,7 @@ export const ColorPicker = (props: Props) => {
                 min="0"
                 max="255"
                 value={props.color.red}
-                onChange={onUpdateRed} />
-            
+                onChange={onUpdateColorComponent(props, 'red')} />
             <br/>
 
             <span>Green</span>
@@ -33,15 +33,7 @@ export const ColorPicker = (props: Props) => {
                 min="0"
                 max="255"
                 value={props.color.green}
-                onChange={
-                    (e) => props.onColorUpdated(
-                        {
-                            red: props.color.red,
-                            green: e.target.valueAsNumber,
-                            blue: props.color.blue
-                        }
-                    )
-                } />
+                onChange={onUpdateColorComponent(props, 'green')} />
             <br/>
 
             <span>Blue</span>
@@ -49,15 +41,7 @@ export const ColorPicker = (props: Props) => {
                 min="0"
                 max="255"
                 value={props.color.blue}
-                onChange={
-                    (e) => props.onColorUpdated(
-                        {
-                            red: props.color.red,
-                            green: props.color.green,
-                            blue: e.target.valueAsNumber
-                        }
-                    )
-                } />
+                onChange={onUpdateColorComponent(props, 'blue')} />
         </div>
     )
 };

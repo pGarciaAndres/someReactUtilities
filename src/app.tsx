@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { HelloComponent } from "./hello";
 import { NameEditComponent } from "./nameEdit";
-import { ColorPicker } from "./components";
+import { ColorPicker, ColorBrowser, SidebarComponent } from "./components";
 import { Color } from "./model";
-import { ColorBrowser } from "./components/colorpicker/colorbrowser";
 
 interface Props{
 
@@ -13,6 +12,7 @@ interface State {
     userName : string;
     editingName : string;
     color : Color;
+    isSideBarVisible : boolean;
 }
 
 export class App extends React.Component<Props, State> {
@@ -25,7 +25,8 @@ export class App extends React.Component<Props, State> {
                 red: 90,
                 green: 90,
                 blue: 90
-            }
+            },
+            isSideBarVisible: false,
         };
     }
 
@@ -50,25 +51,46 @@ export class App extends React.Component<Props, State> {
         this.setState({userName : this.state.editingName})
     }
 
-    disableSubmitButton() {
+    checkDisableSubmitButton() {
         return (this.state.editingName === '' || this.state.editingName === this.state.userName);
+    }
+
+    toggleSidebarVisibility = () => {
+        const newVisibleState = !this.state.isSideBarVisible;
+
+        this.setState({isSideBarVisible : newVisibleState});
     }
 
     public render() {
         return (
             <div>
+                <SidebarComponent isVisible={this.state.isSideBarVisible}>
+                    <ul>
+                        <li>Pelicula 1</li>
+                        <li>Pelicula 2</li>
+                        <li>Pelicula 3</li>
+                    </ul>
+                </SidebarComponent>
                 <ColorBrowser
                     color={this.state.color}/>
                 <ColorPicker
                     color={this.state.color}
                     onColorUpdated={this.setColorState}/>
                 <NameEditComponent
-                    disableSubmitButton={this.disableSubmitButton()}
+                    disableSubmitButton={this.checkDisableSubmitButton()}
                     editingUserName={this.state.editingName}
                     onNameUpdated={this.setEditingUsernameState}
                     onNameSubmit={this.setUsernameFinal}
                 />
                 <HelloComponent userName={this.state.userName} />
+                
+                <div className="float-right">
+                    <button
+                        className="btn btn-default"
+                        onClick={this.toggleSidebarVisibility}>
+                        Toggle Sidebar
+                    </button>
+                </div>
             </div>
         );
     }
